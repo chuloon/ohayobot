@@ -14,7 +14,7 @@ commandFiles.forEach((file) => {
 });
 
 client.once('ready', () => {
-    console.log("Ready!");
+    console.log("Ohayobot online");
 });
 
 client.on('message', message => {
