@@ -41,7 +41,15 @@ createChannel = (message, teamId, type, teamRole) => {
         channel.overwritePermissions(teamRole, {
             VIEW_CHANNEL: true
         });
+
+        addChannelToCategory(message, channel);
     });
+}
+
+addChannelToCategory = (message, channel) => {
+    const category = message.guild.channels.find(c => c.name == "Team Chat" && c.type == "category");
+
+    if(category && channel) channel.setParent(category);
 }
 
 teamCreationProcess = (message, teamId) => {
