@@ -50,7 +50,7 @@ client.on('message', message => {
 });
 
 client.on('guildMemberAdd', (member) => {
-    member.send(["Hello"]);
+    member.send(["Welcome to the Ohayocon Gaming Tournament Realm!"], embedMessage);
 });
 
 client.login(process.env.BOT_TOKEN);
