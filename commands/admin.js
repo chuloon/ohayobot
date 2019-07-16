@@ -20,8 +20,10 @@ deleteRole = (role) => {
 }
 
 deleteChannels = (channels, teamName) => {
-    channels.forEach(channel => {
-        message.reply(channel.name);
+    const channel = channels.find(c => c.name == teamName);
+
+    channel.forEach(c => {
+        c.delete();
     });
 }
 
