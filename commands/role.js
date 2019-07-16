@@ -1,7 +1,7 @@
 module.exports = {
     name: 'role',
     description: 'Adds a player to a role within a game',
-    usage: '<game_name> <role_name>\n game_names = overwatch, league-of-legends\noverwatch_roles: dps, tank, support\nleague_roles: top, jungle, mid, adc, support',
+    usage: '<game_name> <role_name>\n game_names = overwatch, league|league-of-legends\noverwatch_roles: dps, tank, support\nleague_roles: top, jungle, mid, adc, support',
     execute(message, args) {
         if(args.length === 2) {
             if(isPlayerRegisteredToGame(args[0], message.member.roles)) {
@@ -12,7 +12,7 @@ module.exports = {
             }
         }
         else {
-            message.reply('you\'ve supplied the wrong number of arguments. e.g. !role league-of-legends mid')
+            message.reply('you\'ve supplied the wrong number of arguments. e.g. !role league mid')
         }
     }
 }

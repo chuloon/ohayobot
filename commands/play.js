@@ -5,6 +5,7 @@ module.exports = {
     execute(message, args) {
         args.forEach((arg) => {
             arg = arg.toLowerCase();
+            if(arg == "league") arg = "league-of-legends";
             const gameRole = getRole(message.guild.roles, arg);
             if(!gameRole) throw e;
 
