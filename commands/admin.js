@@ -9,7 +9,7 @@ module.exports = {
             const teamName = args[1];
             const role = getRole(message.guild.roles, teamName);
 
-            deleteRole(role);
+            //deleteRole(role);
             deleteChannels(message.guild.channels, teamName);
         }
     }
