@@ -5,6 +5,27 @@ module.exports = {
     execute(message, args) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
-        message.reply("admin controls accessed.");
+        if(args.length == 2) {
+            const teamName = args[1];
+            const role = getRole(message.guild.roles, teamName);
+
+            deleteRole(role);
+            deleteChannels(message.guild.channels, teamName);
+        }
     }
+}
+
+deleteRole = (role) => {
+    role.delete();
+}
+
+deleteChannels = (channels, teamName) => {
+    channels.forEach(channel => {
+        message.reply(channel.name);
+    });
+}
+
+getRole = (roles, roleName) => {
+    const gameRole = roles.find(role => role.name === roleName);
+    return gameRole;
 }
