@@ -38,19 +38,25 @@ client.on('message', message => {
     const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName);
 
-    if(!client.commands.has(commandName)) return;
+    if (!client.commands.has(commandName)) return;
 
     try {
         command.execute(message, args);
     }
-    catch(ex) {
+    catch (ex) {
         console.error(ex);
         message.reply('There was an error executing that command');
     }
 });
 
 client.on('guildMemberAdd', (member) => {
-    member.send(["Welcome to the Ohayocon Gaming Tournament Realm!"], embedMessage);
+    member.send([
+        "Welcome to the Ohayocon Gaming Tournament Realm!",
+        "You can find a more detailed explanation in **!help**, but here's a quick rundown of how to use this server",
+        "Begin by telling me what games you play with **!play <game_name>**",
+        "Tell me what role in a game you play with **!role <game_name> <role_name>**",
+        "To register for a team in a tournament, type **!team <team_key>**. Remember, this key is secret and shouldn't be spread outside of your team. Doing so could risk others joining your team comms!"
+    ], { split: true });
 });
 
 client.login(process.env.BOT_TOKEN);
