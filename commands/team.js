@@ -49,7 +49,7 @@ createChannel = (message, teamId, type, teamRole) => {
 addChannelToCategory = (message, channel) => {
     const category = message.guild.channels.find(c => c.name == "Team Chat" && c.type == "category");
     message.guild.channels.forEach(channel => {
-        if(channel.type == "category") console.log(channel.name)
+        if(channel.name == "League of Legends") console.log(channel)
     });
     if(category && channel) channel.setParent(category);
 }
