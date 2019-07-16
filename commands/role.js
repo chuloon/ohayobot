@@ -5,12 +5,12 @@ module.exports = {
     execute(message, args) {
         if(args.length === 2) {
             if(args[0] == "league") args[0] = "league-of-legends";
-            if(isPlayerRegisteredToGame(args[0], message.member.roles)) {
-                assignPlayerToRole(args, message);
+            if(!isPlayerRegisteredToGame(args[0], message.member.roles)) {
+                const gameRole = getRole(message.guild.roles, args[0]);
+                addPlayerToGame(message, gameRole);
             }
-            else {
-                message.reply(`you aren\'t playing ${args[0]} yet. Use the !play command to register for that game first.`)
-            }
+
+            assignPlayerToRole(args, message);
         }
         else {
             message.reply('you\'ve supplied the wrong number of arguments. e.g. !role league mid')
@@ -39,6 +39,18 @@ getRole = (roles, roleName) => {
 
 throwRoleError = (message) => {
     message.reply("Not a valid role name. For help, type !help role")
+}
+
+addPlayerToGame = (message, gameRole) => {
+    const player = message.member;
+
+    if(!player.roles.has(gameRole.id)) {
+        player.addRole(gameRole).catch(console.error);
+        message.reply(`you\'re now playing ${gameRole.name}`)
+    }
+    else {
+        message.reply(`you\'re already playing ${gameRole.name}`)
+    }
 }
 
 
