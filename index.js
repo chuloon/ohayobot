@@ -39,6 +39,10 @@ client.on('message', message => {
     const command = client.commands.get(commandName);
 
     if (!client.commands.has(commandName)) return;
+    if(message.channel.name == undefined) {
+        message.reply("Your commands must be within the server, not through DMs.");
+        return;
+    }
 
     try {
         command.execute(message, args);
