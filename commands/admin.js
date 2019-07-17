@@ -19,6 +19,7 @@ module.exports = {
             }
         }
 
+        message.delete();
     }
 }
 
@@ -34,7 +35,9 @@ deleteAllRoles = (roles) => {
 
 deleteAllChannels = (channels) => {
     channels.forEach((channel) => {
-        if(channel.name.includes("team-")) channel.delete();
+        if(channel.name.includes("team-")) {
+            channel.delete();
+        }
     })
 }
 
