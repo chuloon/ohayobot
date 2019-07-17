@@ -6,17 +6,36 @@ module.exports = {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
         if(args.length == 2) {
-            const teamName = args[1];
-            const role = getRole(message.guild.roles, teamName);
-
-            //deleteRole(role);
-            deleteChannels(message.guild.channels, teamName);
+            if(args[1] == "all") {
+                deleteAllRoles(message.guild.roles);
+                deleteAllChannels(message.guild.channels);
+            }
+            else {
+                const teamName = args[1];
+                const role = getRole(message.guild.roles, teamName);
+    
+                deleteRole(role);
+                deleteChannels(message.guild.channels, teamName);
+            }
         }
+
     }
 }
 
 deleteRole = (role) => {
     role.delete();
+}
+
+deleteAllRoles = (roles) => {
+    roles.forEach((role) => {
+        if(role.name.includes("team-")) role.delete();
+    });
+}
+
+deleteAllChannels = (channels) => {
+    channels.forEach((channel) => {
+        if(channel.name.includes("team-")) channel.delete();
+    })
 }
 
 deleteChannels = (channels, teamName) => {
