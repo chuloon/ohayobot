@@ -44,12 +44,11 @@ client.on('message', message => {
         return;
     }
     else if(message.channel.name != "command-spam") {
-        console.log("channel log", message.channel);
-
         const data = ["To not spam your fellow players, we\'ve restricted commands to the #command-spam channel."];
 
         message.author.send(data, { split: true });
         message.delete();
+        return;
     }
 
     try {
