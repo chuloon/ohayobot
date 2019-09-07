@@ -34,6 +34,8 @@ createChannel = (message, teamId, type, teamRole) => {
     const everyoneRole = getRole(message.guild.roles, "@everyone");
 
     message.guild.createChannel("team-" + teamId, type).then((channel) => {
+        console.log("everyoneRole: ", everyoneRole);
+        console.log("channel log", channel);
         channel.overwritePermissions(everyoneRole, {
             VIEW_CHANNEL: false
         });
