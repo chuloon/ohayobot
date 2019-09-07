@@ -34,8 +34,6 @@ createChannel = (message, teamId, type, teamRole) => {
     const everyoneRole = getRole(message.guild.roles, "@everyone");
 
     message.guild.createChannel("team-" + teamId, type).then((channel) => {
-        console.log("everyoneRole: ", everyoneRole);
-        console.log("channel log", channel);
         channel.overwritePermissions(everyoneRole, {
             VIEW_CHANNEL: false
         });
@@ -49,7 +47,6 @@ createChannel = (message, teamId, type, teamRole) => {
 }
 
 addChannelToCategory = (message, channel) => {
-    console.log("List channels: ", message.guild.channels);
     const category = message.guild.channels.find(c => c.name == "Team Chat" && c.type == "category");
     if(category && channel) channel.setParent(category);
 }
