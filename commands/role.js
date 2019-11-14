@@ -5,10 +5,9 @@ module.exports = {
     execute(message, args) {
         if(args.length === 2) {
             
-            args.forEach((arg) => {
-                arg = arg.toLowerCase();
+            args.map((arg) => {
+                return arg.toLowerCase();
             });
-            console.log(args);
 
             if(args[0] == "league") args[0] = "league-of-legends";
             if(!isPlayerRegisteredToGame(args[0], message.member.roles)) {
