@@ -52,6 +52,7 @@ addChannelToCategory = (message, channel) => {
 }
 
 teamCreationProcess = (message, teamId) => {
+    console.log(teamId);
     const roleData = {
         name: "team-" + teamId,
         color: '#FFCC00',
