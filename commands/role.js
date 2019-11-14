@@ -4,6 +4,11 @@ module.exports = {
     usage: '<game_name> <role_name>\n game_names = overwatch, league|league-of-legends\noverwatch_roles: dps, tank, support\nleague_roles: top, jungle, mid, adc, support',
     execute(message, args) {
         if(args.length === 2) {
+            
+            args.forEach((arg) => {
+                arg = arg.toLowerCase();
+            });
+
             if(args[0] == "league") args[0] = "league-of-legends";
             if(!isPlayerRegisteredToGame(args[0], message.member.roles)) {
                 const gameRole = getRole(message.guild.roles, args[0]);
@@ -25,7 +30,6 @@ isPlayerRegisteredToGame = (role, playerRoles) => {
 assignPlayerToRole = (args, message) => {
     const player = message.member;
     if(args[0] == "league-of-legends") args[0] = "league";
-    args[1] = args[1].toLowerCase();
     if(eval(args[0] + "Roles").includes(args[1])) {
         player.addRole(getRole(message.guild.roles, args[1])).catch(console.error);
         message.reply(`you are now added to the ${args[1]} role`);
