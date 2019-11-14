@@ -5,7 +5,7 @@ module.exports = {
     execute(message, args) {
         if(args.length === 2) {
             
-            args.map((arg) => {
+            args = args.map((arg) => {
                 return arg.toLowerCase();
             });
 
