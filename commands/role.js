@@ -39,6 +39,7 @@ assignPlayerToRole = (args, message) => {
 
 getRole = (roles, roleName, getSecond = false) => {
     let gameRole;
+    console.log(args);
 
     if(getSecond) {
         gameRole = roles.findAll(role => role.name === roleName);
