@@ -41,7 +41,9 @@ getRole = (roles, roleName, getSecond = false) => {
     let gameRole;
 
     if(getSecond) {
-        gameRole = roles.findAll(role => role.name === roleName)[1];
+        gameRole = roles.findAll(role => role.name === roleName);
+        console.log(gameRole);
+        gameRole = gameRole[1];
     }
     else {
         gameRole = roles.find(role => role.name === roleName);
