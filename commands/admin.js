@@ -71,7 +71,7 @@ createPublicChannels = (message) => {
 }
 
 createServerChannel = (message, name, type, categoryName) => {
-    message.guild.createChannel(name, type)
+    message.guild.channels.create(name, { type: type })
     .then(channel => {
         if(categoryName) {
             addChannelToCategory(message, channel, categoryName);
