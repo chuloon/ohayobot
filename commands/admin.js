@@ -88,6 +88,7 @@ createServerRoles = (message, gameArray) => {
 }
 
 createServerRole = (message, roleName, color = "#fff") => {
+    console.log(roleName);
     return message.guild.roles.create({
         name: roleName,
         color: color
