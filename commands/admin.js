@@ -1,11 +1,16 @@
 module.exports = {
     name: 'admin',
     description: 'Admin controls to delete teams. If you need to use this help command, you probably can\'t use it anyway. kthxbye',
-    usage: 'delete <team_name>',
+    usage: 'delete <team_name> | create',
     execute(message, args) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
-        if(args.length == 2) {
+        if(args.length == 1) {
+            if(args[0] == "create") {
+                createServer(message);
+            }
+        }
+        else if(args.length == 2) {
             if(args[1] == "all") {
                 deleteAllRoles(message.guild.roles);
                 deleteAllChannels(message.guild.channels);
@@ -55,13 +60,22 @@ getRole = (roles, roleName) => {
 }
 
 createServer = (message) => {
+    createPublicChannels(message);
+}
 
+createPublicChannels = (message) => {
+    createChannel(message, "announcements", "text", null);
+    createChannel(message, "welcome", "text", null);
+    createChannel(message, "general", "text", null);
+    createChannel(message, "command-spam", "text", null);
 }
 
 createChannel = (message, name, type, categoryName) => {
     message.guild.createChannel(name, type)
     .then(channel => {
-        addChannelToCategory(message, channel, categoryName);
+        if(categoryName) {
+            addChannelToCategory(message, channel, categoryName);
+        }
     });
 }
 
