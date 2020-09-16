@@ -20,6 +20,7 @@ client.once('ready', () => {
 client.on('message', message => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
+    console.log(commandName);
     const command = client.commands.get(commandName);
 
     if (!client.commands.has(commandName)) return;
