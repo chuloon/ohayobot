@@ -43,7 +43,7 @@ client.on('message', message => {
         message.reply("Your commands must be within the server, not through DMs.");
         return;
     }
-    else if(message.channel.name != "command-spam") {
+    else if(message.channel.name != "command-spam" && commandName != "admin") {
         const data = ["To not spam your fellow players, we\'ve restricted commands to the #command-spam channel."];
 
         message.author.send(data, { split: true });

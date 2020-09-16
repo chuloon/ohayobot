@@ -53,3 +53,21 @@ getRole = (roles, roleName) => {
     const gameRole = roles.find(role => role.name === roleName);
     return gameRole;
 }
+
+createServer = (message) => {
+
+}
+
+createChannel = (message, name, type, categoryName) => {
+    message.guild.createChannel(name, type)
+    .then(channel => {
+        addChannelToCategory(message, channel, categoryName);
+    });
+}
+
+addChannelToCategory = (message, channel, categoryName) => {
+    const category = message.guild.channels.find(c => c.name == categoryName && c.type == "category");
+    if(category && channel) {
+        channel.setParent(category);
+    }
+}
