@@ -127,8 +127,7 @@ createGameChannel = (message, channelName, type, parent) => {
 
 getServerRoleId = async (message, roleName) => {
     let allRoles = await message.guild.roles.fetch();
-    console.log(allRoles);
-    let role = allRoles.find(role => role.name == roleName);
+    let role = allRoles.cache.find(role => role.name == roleName);
     console.log("Role ID for " + roleName + " is " + role.id);
     return role.id
 }
