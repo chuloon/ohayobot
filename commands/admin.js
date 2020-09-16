@@ -66,7 +66,7 @@ createServer = (message, gameList) => {
 }
 
 createGameChannels = (message, gameList) => {
-    
+
 }
 
 buildGameArray = (gameList) => {
@@ -84,7 +84,7 @@ buildGamePromiseArray = (message, gameArray) => {
 }
 
 createServerRoles = (message, gameArray) => {
-    Promise.all(buildGamePromiseArray(message, gameArray))
+    return Promise.all(buildGamePromiseArray(message, gameArray))
 }
 
 createServerRole = (message, roleName, color = "#fff") => {
