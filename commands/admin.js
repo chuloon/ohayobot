@@ -58,7 +58,7 @@ getRole = (roles, roleName) => {
 }
 
 createServer = (message, gameList) => {
-    createPublicChannels(message);
+    // createPublicChannels(message);
     createServerRoles(message, buildGameArray(gameList))
     .then(result => {
         createGameChannels(message, gameList);
@@ -88,10 +88,11 @@ createServerRoles = (message, gameArray) => {
 }
 
 createServerRole = (message, roleName, color = "#fff") => {
-    console.log(roleName);
     return message.guild.roles.create({
-        name: roleName,
-        color: color
+        data: {
+            name: roleName,
+            color: color
+        }
     });
 }
 
