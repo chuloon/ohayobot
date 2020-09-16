@@ -59,7 +59,7 @@ getRole = (roles, roleName) => {
 
 createServer = (message, gameList) => {
     const gameArray = buildGameArray(gameList);
-    createPublicChannels(message);
+    // createPublicChannels(message);
     createServerRoles(message, gameArray)
     .then(result => {
         createGameChannels(message, gameArray);
@@ -115,7 +115,7 @@ buildGameChannelPromises = (message, channel) => {
     return retArray;
 }
 
-createGameChannel = (message, gameName, channelName, type, parent) => {
+createGameChannel = (message, channelName, type, parent) => {
     message.guild.channels.create(
         channelName,
         {
@@ -125,8 +125,8 @@ createGameChannel = (message, gameName, channelName, type, parent) => {
     )
 }
 
-getServerRoleId = (message, roleName) => {
-    let allRoles = message.guild.roles.fetch();
+getServerRoleId = async (message, roleName) => {
+    let allRoles = await message.guild.roles.fetch();
     console.log(allRoles);
     let role = allRoles.find(role => role.name == roleName);
     console.log("Role ID for " + roleName + " is " + role.id);
