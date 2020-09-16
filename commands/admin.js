@@ -58,19 +58,36 @@ getRole = (roles, roleName) => {
 }
 
 createServer = (message, gameList) => {
-    // createPublicChannels(message);
-    // createServerRoles(message, gameList);
-    console.log(gameList); 
+    createPublicChannels(message);
+    createServerRoles(message, buildGameArray(gameList))
+    .then(result => {
+        createGameChannels(message, gameList);
+    });
+}
+
+createGameChannels = (message, gameList) => {
+    
 }
 
 buildGameArray = (gameList) => {
-    return gameList.split(", ");
+    return gameList.split(",");
 }
 
-createServerRoles = (message) => {
+buildGamePromiseArray = (message, gameArray) => {
+    let retArray = [];
+
+    gameArray.forEach(gameName => {
+        retArray.push(createServerRole(message, gameName))
+    })
+
+    return retArray;
 }
 
-createServerRole = (message, roleName, color) => {
+createServerRoles = (message, gameArray) => {
+    Promise.all(buildGamePromiseArray(message, gameArray))
+}
+
+createServerRole = (message, roleName, color = "#fff") => {
     return message.guild.roles.create({
         name: roleName,
         color: color
