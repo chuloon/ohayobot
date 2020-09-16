@@ -64,13 +64,13 @@ createServer = (message) => {
 }
 
 createPublicChannels = (message) => {
-    createChannel(message, "announcements", "text", null);
-    createChannel(message, "welcome", "text", null);
-    createChannel(message, "general", "text", null);
-    createChannel(message, "command-spam", "text", null);
+    createServerChannel(message, "announcements", "text", null);
+    createServerChannel(message, "welcome", "text", null);
+    createServerChannel(message, "general", "text", null);
+    createServerChannel(message, "command-spam", "text", null);
 }
 
-createChannel = (message, name, type, categoryName) => {
+createServerChannel = (message, name, type, categoryName) => {
     message.guild.createChannel(name, type)
     .then(channel => {
         if(categoryName) {
