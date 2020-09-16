@@ -5,13 +5,11 @@ module.exports = {
     execute(message, args) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
-        if(args.length == 1) {
+        if(args.length == 2) {
             if(args[0] == "create") {
-                createServer(message);
+                createServer(message, args[1]);
             }
-        }
-        else if(args.length == 2) {
-            if(args[1] == "all") {
+            else if(args[1] == "all") {
                 deleteAllRoles(message.guild.roles);
                 deleteAllChannels(message.guild.channels);
             }
@@ -59,8 +57,24 @@ getRole = (roles, roleName) => {
     return gameRole;
 }
 
-createServer = (message) => {
-    createPublicChannels(message);
+createServer = (message, gameList) => {
+    // createPublicChannels(message);
+    // createServerRoles(message, gameList);
+    console.log(buildGameArray);
+}
+
+buildGameArray = (gameList) => {
+    return gameList.split(", ");
+}
+
+createServerRoles = (message) => {
+}
+
+createServerRole = (message, roleName, color) => {
+    return message.guild.roles.create({
+        name: roleName,
+        color: color
+    });
 }
 
 createPublicChannels = (message) => {
