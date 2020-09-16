@@ -60,7 +60,7 @@ getRole = (roles, roleName) => {
 createServer = (message, gameList) => {
     // createPublicChannels(message);
     // createServerRoles(message, gameList);
-    console.log(buildGameArray);
+    console.log(buildGameArray); 
 }
 
 buildGameArray = (gameList) => {
