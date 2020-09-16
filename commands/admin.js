@@ -58,15 +58,78 @@ getRole = (roles, roleName) => {
 }
 
 createServer = (message, gameList) => {
+    const gameArray = buildGameArray(gameList);
     createPublicChannels(message);
-    createServerRoles(message, buildGameArray(gameList))
+    createServerRoles(message, gameArray)
     .then(result => {
-        createGameChannels(message, gameList);
+        createGameChannels(message, gameArray);
     });
 }
 
-createGameChannels = (message, gameList) => {
+createGameChannels = async (message, gameArray) => {
+    Promise.all(buildGameCategoryPromises(message, gameArray))
+}
 
+buildGameCategoryPromises = (message, gameArray) => {
+    let retArray = [];
+
+    gameArray.forEach(gameName => {
+        retArray.push(createGameCategory(message, gameName));
+    });
+
+    return retArray;
+}
+
+createGameCategory = async (message, gameName) => {
+    message.guild.channels.create(
+        gameName,
+        {
+            type: 'category',
+            permissionOverwrites: [
+                {
+                    id: message.guild.roles.everyone,
+                    deny: ['VIEW_CHANNEL']
+                },
+                {
+                    id: await getServerRoleId(message, gameName),
+                    allow: ['VIEW_CHANNEL']
+                }
+            ]
+        }
+    ).then(channel => {
+        console.log(channel.name + " category created. Locking permissions now")
+        channel.lockPermissions();
+
+        Promise.all(buildGameChannelPromises(message, channel))
+    })
+}
+
+buildGameChannelPromises = (message, channel) => {
+    let retArray = [];
+
+    retArray.push(createGameChannel(message, "general", "text", channel));
+    retArray.push(createGameChannel(message, "looking-for-group", "text", channel));
+    retArray.push(createGameChannel(message, "Community 1", "voice", channel));
+    retArray.push(createGameChannel(message, "Community 2", "voice", channel));
+
+    return retArray;
+}
+
+createGameChannel = (message, gameName, channelName, type, parent) => {
+    message.guild.channels.create(
+        channelName,
+        {
+            type: type,
+            parent: parent
+        }
+    )
+}
+
+getServerRoleId = (message, roleName) => {
+    let allRoles = message.guild.roles.fetch();
+    let role = allRoles.find(role => role.name == roleName);
+    console.log("Role ID for " + roleName + " is " + role.id);
+    return role.id
 }
 
 buildGameArray = (gameList) => {
@@ -78,7 +141,7 @@ buildGamePromiseArray = (message, gameArray) => {
 
     gameArray.forEach(gameName => {
         retArray.push(createServerRole(message, gameName))
-    })
+    });
 
     return retArray;
 }
