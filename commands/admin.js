@@ -9,16 +9,19 @@ module.exports = {
             if(args[0] == "create") {
                 createServer(message, args[1]);
             }
+            else if(args[0] == "delete" && args[1] == "channels") {
+                deleteAllServerChannels(message.guild.channels.cache);
+            }
             else if(args[1] == "all") {
                 deleteAllRoles(message.guild.roles);
-                deleteAllChannels(message.guild.channels);
+                deleteAllTeamChannels(message.guild.channels.cache);
             }
             else {
                 const teamName = args[1];
                 const role = getRole(message.guild.roles, teamName);
     
                 deleteRole(role);
-                deleteChannels(message.guild.channels, teamName);
+                deleteTeamChannels(message.guild.channels.cache, teamName);
             }
         }
 
@@ -37,6 +40,21 @@ deleteAllRoles = (roles) => {
 }
 
 deleteAllChannels = (channels) => {
+    let deleteArray = [];
+
+    channels.forEach(channel => {
+        deleteArray.push(deleteChannel(channel));
+    });
+
+    Promise.all(deleteArray)
+    .catch(ex => {});
+}
+
+deleteChannel = (channel) => {
+    return channel.delete();
+}
+
+deleteAllTeamChannels = (channels) => {
     channels.forEach((channel) => {
         if(channel.name.includes("team-")) {
             channel.delete();
@@ -44,7 +62,7 @@ deleteAllChannels = (channels) => {
     })
 }
 
-deleteChannels = (channels, teamName) => {
+deleteTeamChannels = (channels, teamName) => {
     channels.forEach((channel) => {
         if(channel.name == teamName) {
             channel.delete();
@@ -68,6 +86,7 @@ createServer = (message, gameList) => {
 
 createGameChannels = async (message, gameArray) => {
     Promise.all(buildGameCategoryPromises(message, gameArray))
+    .catch(ex => {})
 }
 
 buildGameCategoryPromises = (message, gameArray) => {
@@ -101,6 +120,7 @@ createGameCategory = async (message, gameName) => {
         channel.lockPermissions();
 
         Promise.all(buildGameChannelPromises(message, channel))
+        .catch(ex => {})
     })
 }
 
@@ -148,6 +168,7 @@ buildGamePromiseArray = (message, gameArray) => {
 
 createServerRoles = (message, gameArray) => {
     return Promise.all(buildGamePromiseArray(message, gameArray))
+    .catch(ex => {})
 }
 
 createServerRole = (message, roleName, color = "#ffffff") => {
