@@ -1,7 +1,7 @@
 module.exports = {
     name: 'admin',
     description: 'Admin controls to delete teams. If you need to use this help command, you probably can\'t use it anyway. kthxbye',
-    usage: 'delete <team_name> | create',
+    usage: 'delete <team_name> | create <gamelist>',
     execute(message, args) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
@@ -9,7 +9,7 @@ module.exports = {
             if(args[0] == "create") {
                 createServer(message, args[1]);
             }
-            else if(args[0] == "delete" && args[1] == "channels") {
+            else if(args[0] == "cleanslate") {
                 deleteAllChannels(message.guild.channels.cache);
             }
             else if(args[1] == "all") {
