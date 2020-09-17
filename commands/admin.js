@@ -10,7 +10,7 @@ module.exports = {
                 createServer(message, args[1]);
             }
             else if(args[0] == "delete" && args[1] == "channels") {
-                deleteAllServerChannels(message.guild.channels.cache);
+                deleteAllChannels(message.guild.channels.cache);
             }
             else if(args[1] == "all") {
                 deleteAllRoles(message.guild.roles);
