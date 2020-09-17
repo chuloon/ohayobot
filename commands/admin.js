@@ -5,12 +5,14 @@ module.exports = {
     execute(message, args) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
-        if(args.length == 2) {
+        if(args.length == 1) {
+            if(args[0] == "cleanslate") {
+                deleteAllChannels(message.guild.channels.cache);
+            }
+        }
+        else if(args.length == 2) {
             if(args[0] == "create") {
                 createServer(message, args[1]);
-            }
-            else if(args[0] == "cleanslate") {
-                deleteAllChannels(message.guild.channels.cache);
             }
             else if(args[1] == "all") {
                 deleteAllRoles(message.guild.roles);
