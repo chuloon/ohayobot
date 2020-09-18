@@ -1,18 +1,17 @@
 module.exports = {
     name: 'admin',
     description: 'Admin controls to delete teams. If you need to use this help command, you probably can\'t use it anyway. kthxbye',
-    usage: 'delete <team_name> | create <gamelist>',
+    usage: 'delete <team_name> | create <gamelist> | clean <gamelist>',
     execute(message, args) {
         if(!message.member.hasPermission("ADMINISTRATOR")) return;
 
-        if(args.length == 1) {
-            if(args[0] == "cleanslate") {
-                deleteAllChannels(message.guild.channels.cache);
-            }
-        }
-        else if(args.length == 2) {
+        if(args.length == 2) {
             if(args[0] == "create") {
                 createServer(message, args[1]);
+            }
+            else if(args[0] == "clean") {
+                deleteAllChannels(message.guild.channels.cache);
+                deleteAllGameRoles(message.guild.roles.cache, buildGameArray(args[1]))
             }
             else if(args[1] == "all") {
                 deleteAllRoles(message.guild.roles);
@@ -38,6 +37,16 @@ deleteRole = (role) => {
 deleteAllRoles = (roles) => {
     roles.forEach((role) => {
         if(role.name.includes("team-")) role.delete();
+    });
+}
+
+deleteAllGameRoles = (roles, gameArray) => {
+    roles.forEach(role => {
+        let gameArrayIndex = gameArray.indexOf(role.name);
+
+        if(gameArrayIndex != -1) {
+            role.delete();
+        }
     });
 }
 
