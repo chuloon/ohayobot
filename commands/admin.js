@@ -88,11 +88,15 @@ getRole = (roles, roleName) => {
 
 createServer = (message, gameList) => {
     const gameArray = buildGameArray(gameList);
-    // createPublicChannels(message);
-    createServerRoles(message, gameArray)
-    .then(result => {
-        createGameChannels(message, gameArray);
-    });
+    if(gameArray.length == 1 && gameArray[0] == "public") {
+        createPublicChannels(message);
+    }
+    else {
+        createServerRoles(message, gameArray)
+        .then(result => {
+            createGameChannels(message, gameArray);
+        });
+    }
 }
 
 createGameChannels = async (message, gameArray) => {
